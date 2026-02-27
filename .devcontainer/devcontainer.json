@@ -7,12 +7,16 @@
       "upgradePackages": true
     },
     "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/go:1": {},
     "ghcr.io/devcontainers/features/node:1": {
       "version": "24"
     },
     "ghcr.io/devcontainers/features/dotnet:1": {},
     "ghcr.io/devcontainers/features/python:1": {},
-    "ghcr.io/devcontainers/features/java:1": {}
+    "ghcr.io/devcontainers/features/java:1": {},
+    "ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": {
+      "shellautocompletion": true
+    }
   },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
   "workspaceFolder": "/workspace",
@@ -24,6 +28,7 @@
     "npm_config_loglevel": "error"
   },
   "postCreateCommand": {
-    "fixVolumePerms": "sudo chown -R $(whoami): /workspace"
+    "Chown workspace": "sudo chown -R $(whoami): /workspace",
+    "Install AWSDAC (Diagram as Code)": "go install github.com/awslabs/diagram-as-code/cmd/awsdac@latest"
   }
 }
