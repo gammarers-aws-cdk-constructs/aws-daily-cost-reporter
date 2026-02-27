@@ -1,0 +1,77 @@
+# AWS DAC (diagram-as-code) 形式
+# https://github.com/awslabs/diagram-as-code
+# 生成: awsdac diagrams/aws-daily-cost-reporter-construct.yaml -o diagrams/aws-daily-cost-reporter-construct.png
+# 直交リンク（斜めなし）・背景透過でライト/ダーク両対応
+Diagram:
+  DefinitionFiles:
+    - Type: URL
+      Url: "https://raw.githubusercontent.com/awslabs/diagram-as-code/main/definitions/definition-for-aws-icons-light.yaml"
+  # 背景: awsdac が Diagram.Options で透過をサポートしていない場合、
+  # SVG 出力 ( -o xxx.svg ) にすると多くのビューアで背景が透過表示されます。
+  # 必要なら PNG は後から ImageMagick 等で背景を透明にできます。
+  Resources:
+    Canvas:
+      Type: AWS::Diagram::Canvas
+      Direction: vertical
+      Children:
+        - AWSCloud
+        - Slack
+    AWSCloud:
+      Type: AWS::Diagram::Cloud
+      Direction: vertical
+      Preset: AWSCloudNoLogo
+      Align: center
+      Children:
+        - ConstructStack
+    ConstructStack:
+      Type: AWS::Diagram::HorizontalStack
+      Children:
+        - Schedule
+        - CostReportFunction
+        - DataSources
+    Schedule:
+      Type: AWS::Scheduler::Schedule
+    CostReportFunction:
+      Type: AWS::Lambda::Function
+    DataSources:
+      Type: AWS::Diagram::VerticalStack
+      Children:
+        - SlackSecret
+        - CostExplorer
+        - CloudWatchLogs
+    SlackSecret:
+      Type: AWS::SecretsManager::Secret
+    CostExplorer:
+      Type: AWS::CE
+    CloudWatchLogs:
+      Type: AWS::CloudWatch
+    Slack:
+      Type: AWS::Diagram::Resource
+      Preset: User
+  Links:
+    # Type: orthogonal = 直角のみ（斜めの線にしない）
+    - Source: Schedule
+      Target: CostReportFunction
+      TargetArrowHead:
+        Type: Open
+      Type: orthogonal
+    - Source: CostReportFunction
+      Target: SlackSecret
+      TargetArrowHead:
+        Type: Open
+      Type: orthogonal
+    - Source: CostReportFunction
+      Target: CostExplorer
+      TargetArrowHead:
+        Type: Open
+      Type: orthogonal
+    - Source: CostReportFunction
+      Target: CloudWatchLogs
+      TargetArrowHead:
+        Type: Open
+      Type: orthogonal
+    - Source: CostReportFunction
+      Target: Slack
+      TargetArrowHead:
+        Type: Open
+      Type: orthogonal

@@ -35,6 +35,12 @@ When you use `DailyCostReporter` or `DailyCostReportStack`, the following are cr
 - **CloudWatch Log group** – For the Lambda (3 months retention, destroyed with the stack).
 - **EventBridge Scheduler schedule** – One-time per day at 09:01 UTC, invoking the Lambda alias with the chosen `costGroupType`.
 
+## Architecture
+
+The following diagram shows the high-level architecture of the daily cost reporter construct, including the EventBridge Scheduler trigger, the reporting Lambda function, its AWS data sources (Secrets Manager, Cost Explorer, CloudWatch Logs), and Slack as the notification destination.
+
+![AWS Daily Cost Reporter architecture](diagrams/construct.svg)
+
 ## Installation
 
 **npm**
