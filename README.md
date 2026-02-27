@@ -39,7 +39,7 @@ When you use `DailyCostReporter` or `DailyCostReportStack`, the following are cr
 
 The following diagram shows the high-level architecture of the daily cost reporter construct, including the EventBridge Scheduler trigger, the reporting Lambda function, its AWS data sources (Secrets Manager, Cost Explorer, CloudWatch Logs), and Slack as the notification destination.
 
-![AWS Daily Cost Reporter architecture](diagrams/construct.svg)
+![AWS Daily Cost Reporter architecture](diagrams/construct.png)
 
 ## Installation
 
