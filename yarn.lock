@@ -6177,6 +6177,11 @@ safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
+safe-env-getter@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/safe-env-getter/-/safe-env-getter-0.1.4.tgz#a2756b7450ec0876a643badd200076b34d9a8b34"
+  integrity sha512-C1/FW18K8/TOFumdRQ57voup4TYeWuXjtuGp4P11xTZk6hTgGbvOG3dXUNWbiCGFnh+RQGcJBPsw8CzuRilIqw==
+
 safe-push-apply@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/safe-push-apply/-/safe-push-apply-1.0.0.tgz#01850e981c1602d398c85081f360e4e6d03d27f5"
