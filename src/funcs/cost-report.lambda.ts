@@ -10,6 +10,7 @@ import {
 } from '@aws-sdk/client-cost-explorer';
 import { WebClient } from '@slack/web-api';
 import { secretFetcher } from 'aws-lambda-secret-fetcher';
+import { SafeEnvGetter } from 'safe-env-getter';
 
 /**
  * Valid values for EventInput.Type (single source of truth for type and runtime check).
@@ -70,6 +71,9 @@ export interface AccountBilling {
   readonly unit: string;
 }
 
+/**
+ * Slack API credentials and target channel (stored in Secrets Manager).
+ */
 export interface SlackSecret {
   readonly token: string;
   readonly channel: string;
@@ -269,17 +273,13 @@ const ceClient = new CostExplorerClient({
  * @param context - Durable execution context for steps and logging
  * @returns 'OK' on success, or throws on missing env/input or invalid Type
  */
-export const handler = withDurableExecution(async (
-  event: EventInput,
-  context: DurableContext,
-): Promise<string | Error> => {
+export const handler = withDurableExecution(async (event: EventInput, context: DurableContext): Promise<string | Error> => {
   context.logger.info('Event received', { event });
   context.logger.info('Lambda context', { context: context.lambdaContext });
 
-  const slackSecretName = process.env.SLACK_SECRET_NAME;
-  if (!slackSecretName) {
-    throw new Error('missing environment variable SLACK_SECRET_NAME.');
-  }
+  // safe get SecretManager env
+  const slackSecretName = SafeEnvGetter.getEnv('SLACK_SECRET_NAME');
+
   if (!event.type) {
     throw new Error('missing input variable type');
   }
