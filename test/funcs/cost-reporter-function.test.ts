@@ -7,6 +7,8 @@ import {
   CheckpointDurableExecutionCommand,
   GetDurableExecutionStateCommand,
   LambdaClient,
+  OperationStatus,
+  OperationType,
 } from '@aws-sdk/client-lambda';
 import { WebClient } from '@slack/web-api';
 import { Context } from 'aws-lambda';
@@ -24,7 +26,7 @@ jest.mock('aws-lambda-secret-fetcher', () => ({
 
 const lambdaMock = mockClient(LambdaClient);
 
-/** Durable Execution ランタイムが渡すペイロードを再現（テスト用） */
+/** Durable Execution ランタイムが渡すペイロードを再現（テスト用）。Operation は Lambda API の形式に合わせる。 */
 function createDurableInvocationInput(event: EventInput): DurableExecutionInvocationInput {
   return {
     DurableExecutionArn: 'arn:aws:lambda:us-east-1:123456789012:function:cost-report',
@@ -32,10 +34,14 @@ function createDurableInvocationInput(event: EventInput): DurableExecutionInvoca
     InitialExecutionState: {
       Operations: [
         {
+          Id: 'execution-start',
+          Type: OperationType.EXECUTION,
+          StartTimestamp: new Date('2023-02-01T00:00:00.000Z'),
+          Status: OperationStatus.SUCCEEDED,
           ExecutionDetails: {
             InputPayload: JSON.stringify(event),
           },
-        } as unknown as DurableExecutionInvocationInput['InitialExecutionState']['Operations'][0],
+        },
       ],
     },
   };
