@@ -151,7 +151,7 @@ exports[`Stack specific(all arguments) Testing Should match snapshot 1`] = `
         },
         "FunctionVersion": {
           "Fn::GetAtt": [
-            "DailyCostReporterCostReportFunctionCurrentVersionCB7C6157c481051d4eba737ee9070cbc3c45e131",
+            "DailyCostReporterCostReportFunctionCurrentVersionCB7C61578410f2b355cfe61fdc6299b8bde75b55",
             "Version",
           ],
         },
@@ -159,7 +159,7 @@ exports[`Stack specific(all arguments) Testing Should match snapshot 1`] = `
       },
       "Type": "AWS::Lambda::Alias",
     },
-    "DailyCostReporterCostReportFunctionCurrentVersionCB7C6157c481051d4eba737ee9070cbc3c45e131": {
+    "DailyCostReporterCostReportFunctionCurrentVersionCB7C61578410f2b355cfe61fdc6299b8bde75b55": {
       "Metadata": {
         "aws:cdk:do-not-refactor": true,
       },
